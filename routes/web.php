@@ -15,14 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+  Route::get('/react','ReactTestController@index')->name('react');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function(){
-
   Route::resource('companies','CompaniesController');
   Route::get('projects/create/{company_id?}', 'ProjectsController@create');
+  Route::post('projects/addUser', 'ProjectsController@addUser')->name('projects.addUser');
   Route::resource('projects','ProjectsController');
   Route::resource('comments','CommentsController');
   Route::resource('roles','RolesController');

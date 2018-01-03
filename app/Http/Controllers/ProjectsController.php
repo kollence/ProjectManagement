@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Company;
+use App\User;
+use App\ProjectUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +24,28 @@ class ProjectsController extends Controller
          }
          return view('auth.login');
      }
+    //  add user
+    public function addUser(Request $request)
+    {                                        $id = $request->input('project_id');
+                                             $email = $request->input('email');
+       $project = Project::find($id);
+
+       if (Auth::user()->id == $project->user_id) {
+         $user = User::where('email', $email)->first();
+           $userOfProject = ProjectUser::where('user_id', $user->id)
+                                       ->where('project_id',$project->id)
+                                       ->first();
+          if($userOfProject){
+            return redirect()->back()->with('success', 'user already member of project');
+          }
+
+           if ($user && $project) {
+             $project->users()->attach($user->id);
+             return redirect()->back()->with('success', 'successfully added user to project');
+           }
+       }
+       return redirect()->back()->with('errors', 'email is wrong');
+    }
 
      /**
       * Show the form for creating a new resource.
@@ -73,7 +97,8 @@ class ProjectsController extends Controller
          // $project = Project::find($project->id);
          // dd($project->projects);
          // $projects = $project->projects;
-         return view('projects.show', compact('project'));
+         $comments = $project->comments;
+         return view('projects.show', compact('project', 'comments'));
 
      }
 

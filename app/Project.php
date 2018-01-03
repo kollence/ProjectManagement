@@ -12,7 +12,7 @@ class Project extends Model
       return $this->belongsTo(Company::class);
     }
 
-    public function user(){
+    public function users(){
       return $this->belongsToMany(User::class);
     }
 

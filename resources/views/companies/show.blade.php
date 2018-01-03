@@ -29,15 +29,15 @@
            <div class="sidebar-module">
             <h4>Actions</h4>
             <ol class="list-unstyled">
-              <li><a href="/companies">List of Companies</a></li>
-              <li><a href="/companies/create">Create Company</a></li>
-              <li><a href="/companies/{{$company->id}}/edit">Edit</a></li>
-              <li><a href="/projects/create/{{$company->id}}">Add Project</a></li>
+              <li><a href="/companies"><i class="fa fa-list-alt" aria-hidden="true"></i> List of Companies</a></li>
+              <li><a href="/companies/create"><i class="fa fa-creative-commons" aria-hidden="true"></i> Create Company</a></li>
+              <li><a href="/companies/{{$company->id}}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></li>
+              <li><a href="/projects/create/{{$company->id}}"><i class="fa fa-plus" aria-hidden="true"></i> Add Project</a></li>
               <li><a href="#" onclick="var res = confirm('Are you sure you want to delete company');
                                         if(res){
                                          event.preventDefault();
                                          document.getElementById('for-delete').submit();
-                                        }">Delete</a>
+                                        }"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>
                               <form id="for-delete" action="{{route('companies.destroy',[$company->id])}}" method="post" style="display:none;">
                                    {{csrf_field()}}
                                    <input type="hidden" name="_method" value="DELETE">
